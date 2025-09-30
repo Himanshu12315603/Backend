@@ -17,6 +17,7 @@
             });
     }
 
+    // readable function through await 
     function calculate1() {
         const a = document.getElementById("firstNumber").value;
         const b = document.getElementById("secondNumber").value;
@@ -25,6 +26,7 @@
         const ans = await response.text();
         document.getElementById("finalSum").innerHTML = ans;
     }
+
     </script>
     <body>
         <input type="text" id="firstNumber" value=""> <br><br>
