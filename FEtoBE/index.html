@@ -1,41 +1,35 @@
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    </head>
-    <script>
+<head>
+  <meta charset="utf-8" />
+  <title>Sum App</title>
+</head>
+<body>
+  <input type="text" id="firstNumber" placeholder="firstNumber"> <br><br>
+  <input type="text" id="secondNumber" placeholder="secondNumber"><br><br>
 
-    function calculate() {
+    <button onclick="calculate1()">Sum</button><br><br>
 
+  <div id="finalSum"></div>
+
+  <script>
+    async function calculate1() {
+      try {
         const a = document.getElementById("firstNumber").value;
         const b = document.getElementById("secondNumber").value;
 
-        fetch("https://sum-server.100xdevs.com/sum?a=" + a + "&b=" + b)
-            .then(function(response) {
-                response.text()
-                    .then(function(ans){
-                        document.getElementById("finalSum").innerHTML = ans;
-                    })
-            });
-    }
-
-    // readable function through await 
-    function calculate1() {
-        const a = document.getElementById("firstNumber").value;
-        const b = document.getElementById("secondNumber").value;
-
-        //backend code 
-        const response = await fetch("https://sum-server.100xdevs.com/sum?a=" + a + "&b=" + b)
+        // fetch from local server
+        const response = await fetch("http://localhost:3000/sum?a=" + encodeURIComponent(a) + "&b=" + encodeURIComponent(b));
+        if (!response.ok) throw new Error("Network response was not ok: " + response.status);
         const ans = await response.text();
-        document.getElementById("finalSum").innerHTML = ans;
+        document.getElementById("finalSum").textContent = ans;
+      } catch (err) {
+        console.error("Fetch error:", err);
+        document.getElementById("finalSum").textContent = "Error: " + err.message;
+      }
     }
-
-    </script>
-    <body>
-        <input type="text" id="firstNumber" value=""> <br><br>
-        <input type="text" id="secondNumber" value=""><br><br>
-
-        <button onclick = "calculate()">Calculate Sum</button><br> 
-
-        <div id="finalSum"> </div>
-    </body>
+  </script>
+</body>
 </html>
+
