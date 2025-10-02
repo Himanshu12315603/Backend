@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    </head>
+    <script>
+
+    let timeout;
+    function debouncePopulateDiv() {
+        //how do you cancel a clock?
+        //clear timeout
+        clearTimeout(timeout);
+        timeout = setTimeout(function() {
+            calculate();
+        }, 1000)
+    }
+
+    function calculate() {
+
+        const a = document.getElementById("firstNumber").value;
+        const b = document.getElementById("secondNumber").value;
+
+        fetch("http://localhost:3000/sum?a=" + a + "&b=" + b)
+            .then(function(response) {
+                response.text()
+                    .then(function(ans){
+                        document.getElementById("finalSum").innerHTML = ans;
+                    })
+            });
+    }
+
+
+    </script>
+    <body>
+        <input oninput="debouncePopulateDiv()" type="text" id="firstNumber" value=""> <br><br>
+        <input oninput="debouncePopulateDiv()" type="text" id="secondNumber" value=""><br><br>
+
+        <!--<button onclick = "calculate()">Calculate Sum</button><br> -->
+
+        <div id="finalSum"> </div>
+    </body>
+</html>
+
