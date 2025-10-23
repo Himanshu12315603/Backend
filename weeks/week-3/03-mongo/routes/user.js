@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const userMiddleware = require("../middleware/user");
-const { User } = require("../db");
+const { User, Course } = require("../db");
 
 // User Routes
 router.post('/signup', (req, res) => {
@@ -32,10 +32,27 @@ router.get('/courses', async (req, res) => {
 
 router.post('/courses/:courseId', userMiddleware, (req, res) => {
     // Implement course purchase logic
+    
+    const courseId = req.params.courseId;
+    const username = req.headers.username;
+
+    User.updateOne({
+        username: username
+    }, {
+        "$push": {
+            purchasedCourses: courseId
+        }
+    }).catch(err => {
+        console.log(err);
+    });
+    res.json({
+        msg: "You have successfully purchased the course"
+    })
 });
 
 router.get('/purchasedCourses', userMiddleware, (req, res) => {
     // Implement fetching purchased courses logic
+     
 });
 
 module.exports = router
