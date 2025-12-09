@@ -1,8 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
 const app = express();
 const adminRouter = require("./routes/admin")
 const userRouter = require("./routes/user");
+
+const JWT_SECRET = "himanshu_server";
 
 // Middleware for parsing request bodies
 app.use(bodyParser.json());
@@ -13,3 +16,4 @@ const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
