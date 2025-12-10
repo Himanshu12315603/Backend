@@ -1,16 +1,21 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+
+  function onClickHandler() {
+
+    setCount(count + 1);
+  }
 
   return (
     <div>
-       <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+      <button onClick={ onClickHandler } > Count {count} </button>
     </div>
-  )
+
+  );
+
 }
+
 
 export default App
