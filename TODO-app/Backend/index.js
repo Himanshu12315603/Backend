@@ -3,11 +3,9 @@ const { createTodo, updateTodo } = require("./types")
 const { todo } = require("./db")
 const app = express();
 
-
 app.use(express.json());
 
-
-app.post("/todo", async (req, res)=> {
+app.post("/todo", async (req, res) => {
     const createPayload = req.body;
     const parsedPayload = createTodo.safeParse(createPayload);
     if (!parsedPayload.success) {
@@ -27,8 +25,12 @@ app.post("/todo", async (req, res)=> {
     })
 })
 
-app.get("/todos", (req, res)=> {
+app.get("/todos", async (req, res) => {
+    const todos = await todo.find();
 
+    res.json({
+        todos
+    })
 })
 
 app.get("/completed", (req, res)=> {
@@ -41,6 +43,5 @@ app.get("/completed", (req, res)=> {
         return;
 
     }
-
 })
 
