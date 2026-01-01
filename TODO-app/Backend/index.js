@@ -19,7 +19,7 @@ app.post("/todo", async (req, res) => {
     //put it in mongodb
     await todo.create({
         title: createPayload.title,
-        description: createPayload.description
+        description: createPayload.description,
         completed: false
     })
     
@@ -57,3 +57,4 @@ app.get("/completed", async (req, res)=> {
     })
 })
 
+app.listen(3000);
