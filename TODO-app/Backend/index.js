@@ -36,7 +36,7 @@ app.get("/todos", async (req, res) => {
     })
 })
 
-app.get("/completed", async (req, res)=> {
+app.put("/completed", async (req, res)=> {
     const updatePayload = req.body;
     const parsedPayload = updateTodo.safeParse(updatePayload)
     if (!parsedPayload.success) {
