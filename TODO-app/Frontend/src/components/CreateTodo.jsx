@@ -1,10 +1,39 @@
+import { useState } from "react"
+export function CreateTodo() {
+    // react-query 
 
-function CreateTodo() {
-    return <div> 
-        <input type="text" placeholder="title"></input> <br/>
-        <input type="text" placeholder="description"></input> <br/>
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
 
-        <button>Add a Todo</button>
+
+    return <div>
+        <input id="title" style={{ marginBottom: "10px", padding: "10px" }} type="text" placeholder="title"
+            onChange={function (e) {
+                const value = e.target.value;
+                setTitle(e.target.value);
+            }}></input> <br />
+
+        <input id="description" style={{ marginBottom: "10px", padding: "10px" }} type="text" placeholder="description"
+            onChange={function (e) { const value = e.target.value; setDescription(e.target.value); }}></input> <br />
+
+        <button style={{
+            padding: 10, margin: 10
+        }} onClick={() => {
+            fetch("http://localhost:3000/todo", {
+                method: "POST",
+                body: JSON.stringify({
+                    title: title,
+                    description: description
+                }),
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+                .then(async function (res) {
+                    const json = await res.json();
+                    alert("Todo Added");
+                })
+        }}>Add a Todo</button>
 
     </div>
 }
