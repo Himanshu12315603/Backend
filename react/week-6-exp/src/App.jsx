@@ -1,4 +1,7 @@
+import React from 'react'
 import { useState } from 'react'
+
+let counter = 4;
 
 function App() {
   const [todos, setTodos] = useState([
@@ -10,9 +13,9 @@ function App() {
 
   function addTodo() {
     setTodos([...todos, {
-      id: 4,
-      title: "Eat food",
-      description: "Eat healthy food"
+      id: counter++,
+      title: Math.random().toString(),
+      description: Math.random() 
     }])
   }
 
@@ -30,7 +33,6 @@ function App() {
 function Todo({title, description}) {
   return <div>
     <h1>{title}</h1>
-
     <h5>{description}</h5>
   </div>
 }
