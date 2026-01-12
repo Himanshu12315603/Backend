@@ -1,68 +1,37 @@
-import React from 'react'
-import { useState } from 'react'
+import React from 'react';
+import { useState } from 'react';
+import { useEffect } from "react";
 
-let counter = 4;
 
 function App() {
-  const [todos, setTodos] = useState([
-    {id: 1, title: "Learn React", description: "learn react from scratch"},
-    {id: 2, title: "Learn DSA", description: "learn DSA from scratch"},
-    {id: 3, title: "Go To GYm", description: "Go To GYm daily"},
-  ])
+    const [todos, setTodos] = useState([]);
 
+    useEffect(() => {
+        setInterval(() => {
+            Math.random();
+            fetch("https://sum-server.100xdevs.com/todos")
+                .then(async function (res) {
+                    const json = await res.json();
+                    setTodos(json.todos);
+                })
+        }, 1000);
+    }, [])
 
-  function addTodo() {
-    setTodos([...todos, {
-      id: counter++,
-      title: Math.random().toString(),
-      description: Math.random() 
-    }])
-  }
-
-  return (
-    <div>
-      <button onClick = {addTodo}>Add Todo</button>
-      {todos.map(todo => <Todo title={todo.title} description={todo.description} />)}
-
+    return <div>
+        {todos.map(todo => { <Todo title={todo.title} description={todo.description} />})}
     </div>
-  )
 }
 
 
+function Todo(title, description) {
+    return <div>
+        <h1>
+            {title}
+        </h1>
+        <h4>
+            {description}
+        </h4>
+    </div>
 
-function Todo({title, description}) {
-  return <div>
-    <h1>{title}</h1>
-    <h5>{description}</h5>
-  </div>
 }
-
-
-
-
-
-
-
-// function HeaderWithButton() {
-//   const [title, setTitle] = useState("Himanshu");
-
-//   function updateTitle() {
-//     setTitle("My name is " + Math.random());
-//   }
-
-//   return <div>
-//       <button onClick={updateTitle}>Update the title</button>
-//       <Header title={title} />
-
-//     </div>
-  
-// }
-
-// function Header(props) {
-//   return <div>
-//     {props.title}
-//   </div>
-// }
-
-
-export default App
+export default App;
